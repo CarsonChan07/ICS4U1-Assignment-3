@@ -15,9 +15,8 @@ function calculateHeron() {
     return;
   }
 
-  let s = (a + b + c) / 2;
-  let area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
-
+  let area = (1 / 4) * Math.sqrt(4 * Math.pow(a, 2) * Math.pow(b, 2) - Math.pow((Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)), 2));
+  
   document.getElementById("heronResult").value = isNaN(area) ? "Invalid triangle" : area.toFixed(2);
 }
 
@@ -45,4 +44,47 @@ function calculateAmbiguous() {
   }
 
   document.getElementById("triangleResult").value = result;
+}
+
+function calculateNewton() {
+  let x0 = parseFloat(document.getElementById("rootGuess").value);
+
+  if (isNaN(x0)) {
+      document.getElementById("newtonResult").value = "Invalid input";
+      return;
+  }
+
+  function f(x) {
+      return 6 * Math.pow(x, 4) - 13 * Math.pow(x, 3) - 18 * Math.pow(x, 2) + 7 * x + 6;
+  }
+
+  function fPrime(x) {
+      return 24 * Math.pow(x, 3) - 39 * Math.pow(x, 2) - 36 * x + 7;
+  }
+
+  let x1 = x0 - f(x0) / fPrime(x0);
+  document.getElementById("newtonResult").value = x1.toFixed(5);
+}
+
+function calculatePolynomial() {
+  let coeffs = document.getElementById("coefficients").value.split(" ").map(Number);
+  let exps = document.getElementById("exponents").value.split(" ").map(Number);
+  let x = parseFloat(document.getElementById("xValue").value);
+
+  if (coeffs.length !== exps.length || isNaN(x)) {
+      document.getElementById("polyResult").value = "Invalid input";
+      document.getElementById("polyEvalResult").value = "";
+      return;
+  }
+
+  let polyString = "";
+  let result = 0;
+
+  for (let i = 0; i < coeffs.length; i++) {
+      polyString += (i > 0 ? (coeffs[i] >= 0 ? " + " : " - ") : "") + Math.abs(coeffs[i]) + "x^" + exps[i];
+      result += coeffs[i] * Math.pow(x, exps[i]);
+  }
+
+  document.getElementById("polyResult").value = polyString;
+  document.getElementById("polyEvalResult").value = result.toFixed(2);
 }
