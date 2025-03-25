@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("polyBtn").addEventListener("click", calculatePolynomial);
 });
 
+//Heron's Formula
+
 function calculateHeron() {
   let a = parseFloat(document.getElementById("sideA").value);
   let b = parseFloat(document.getElementById("sideB").value);
@@ -24,6 +26,8 @@ function calculateHeron() {
   
   document.getElementById("heronResult").value = isNaN(area) ? "Invalid triangle" : area.toFixed(2);
 }
+
+//Ambiguous Case
 
 function calculateAmbiguous() {
   let A = parseFloat(document.getElementById("angleA").value);
@@ -51,6 +55,8 @@ function calculateAmbiguous() {
   document.getElementById("triangleResult").value = result;
 }
 
+//Newton's Method
+
 function calculateNewton() {
   let x0 = parseFloat(document.getElementById("rootGuess").value);
 
@@ -70,6 +76,8 @@ function calculateNewton() {
   let x1 = x0 - f(x0) / fPrime(x0);
   document.getElementById("newtonResult").value = x1.toFixed(5);
 }
+
+//Polynomial Function
 
 function calculatePolynomial() {
   let coeffs = document.getElementById("coefficients").value.split(" ").map(Number);
