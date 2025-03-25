@@ -15,6 +15,11 @@ function calculateHeron() {
     return;
   }
 
+  if (a + b <= c || a + c <= b || b + c <= a) {
+    document.getElementById("heronResult").value = "Invalid triangle";
+    return;
+  } 
+
   let area = (1 / 4) * Math.sqrt(4 * Math.pow(a, 2) * Math.pow(b, 2) - Math.pow((Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)), 2));
   
   document.getElementById("heronResult").value = isNaN(area) ? "Invalid triangle" : area.toFixed(2);
