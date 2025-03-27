@@ -55,8 +55,7 @@ function calculateAmbiguous() {
   document.getElementById("triangleResult").value = result;
 }
 
-//Newton's Method
-
+// Newton's Method Function
 function calculateNewton() {
   let x0 = parseFloat(document.getElementById("rootGuess").value);
 
@@ -77,27 +76,27 @@ function calculateNewton() {
   document.getElementById("newtonResult").value = x1.toFixed(5);
 }
 
-//Polynomial Function
-
+// Polynomial Function
 function calculatePolynomial() {
-  let coeffs = document.getElementById("coefficients").value.split(" ").map(Number);
-  let exps = document.getElementById("exponents").value.split(" ").map(Number);
+  let coeffs = document.getElementById("coefficients").value.trim().split(/\s+/).map(Number);
+  let exps = document.getElementById("exponents").value.trim().split(/\s+/).map(Number);
   let x = parseFloat(document.getElementById("xValue").value);
 
-  if (coeffs.length !== exps.length || isNaN(x)) {
+  if (coeffs.some(isNaN) || exps.some(isNaN) || isNaN(x) || coeffs.length !== exps.length) {
       document.getElementById("polyResult").value = "Invalid input";
       document.getElementById("polyEvalResult").value = "";
       return;
   }
 
-  let polyString = "";
+  let terms = [];
   let result = 0;
 
   for (let i = 0; i < coeffs.length; i++) {
-      polyString += (i > 0 ? (coeffs[i] >= 0 ? " + " : " - ") : "") + Math.abs(coeffs[i]) + "x^" + exps[i];
+      let term = `${coeffs[i]}x^${exps[i]}`;
+      terms.push(term);
       result += coeffs[i] * Math.pow(x, exps[i]);
   }
 
-  document.getElementById("polyResult").value = polyString;
+  document.getElementById("polyResult").value = terms.join(" + ");
   document.getElementById("polyEvalResult").value = result.toFixed(2);
 }
