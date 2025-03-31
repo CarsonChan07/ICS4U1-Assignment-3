@@ -78,25 +78,25 @@ function calculateNewton() {
 
 // Polynomial Function
 function calculatePolynomial() {
-  let coeffs = document.getElementById("coefficients").value.trim().split(/\s+/).map(Number);
-  let exps = document.getElementById("exponents").value.trim().split(/\s+/).map(Number);
+  let coeffs = document.getElementById("coefficients").value.split(" ").map(Number);
+  let exps = document.getElementById("exponents").value.split(" ").map(Number);
   let x = parseFloat(document.getElementById("xValue").value);
 
-  if (coeffs.some(isNaN) || exps.some(isNaN) || isNaN(x) || coeffs.length !== exps.length) {
+  if (coeffs.length !== exps.length || isNaN(x)) {
       document.getElementById("polyResult").value = "Invalid input";
       document.getElementById("polyEvalResult").value = "";
       return;
   }
 
-  let terms = [];
+  let polyString = "";
   let result = 0;
 
   for (let i = 0; i < coeffs.length; i++) {
-      let term = `${coeffs[i]}x^${exps[i]}`;
-      terms.push(term);
+      if (i > 0) polyString += coeffs[i] >= 0 ? " + " : " - ";
+      polyString += Math.abs(coeffs[i]) + "x^" + exps[i];
       result += coeffs[i] * Math.pow(x, exps[i]);
   }
 
-  document.getElementById("polyResult").value = terms.join(" + ");
-  document.getElementById("polyEvalResult").value = result.toFixed(2);
+  document.getElementById("polyResult").value = "f(x) = " + polyString;
+  document.getElementById("polyEvalResult").value = "f(" + x + ") = " + result.toFixed(2);
 }
