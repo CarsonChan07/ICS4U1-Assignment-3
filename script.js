@@ -61,42 +61,19 @@ function calculateNewton() {
   let x0 = parseFloat(document.getElementById("rootGuess").value);
 
   if (isNaN(x0)) {
-    document.getElementById("newtonResult").value = "Invalid input";
-    return;
+      document.getElementById("newtonResult").value = "Invalid input";
+      return;
   }
 
   function f(x) {
-    return 6 * Math.pow(x, 4) - 13 * Math.pow(x, 3) - 18 * Math.pow(x, 2) + 7 * x + 6;
+      return 6 * Math.pow(x, 4) - 13 * Math.pow(x, 3) - 18 * Math.pow(x, 2) + 7 * x + 6;
   }
 
   function fPrime(x) {
-    return 24 * Math.pow(x, 3) - 39 * Math.pow(x, 2) - 36 * x + 7;
+      return 24 * Math.pow(x, 3) - 39 * Math.pow(x, 2) - 36 * x + 7;
   }
 
-  let x1;
-  let maxIterations = 100;
-  let tolerance = 1e-6;
-  let iteration = 0;
-
-  while (iteration < maxIterations) {
-    let derivative = fPrime(x0);
-
-
-    if (derivative === 0) {
-      document.getElementById("newtonResult").value = "Derivative is zero";
-      return;
-    }
-
-    x1 = x0 - f(x0) / derivative;
-
-    if (Math.abs(x1 - x0) < tolerance) {
-      break;
-    }
-
-    x0 = x1;
-    iteration++;
-  }
-
+  let x1 = x0 - f(x0) / fPrime(x0);
   document.getElementById("newtonResult").value = x1.toFixed(5);
 }
 
